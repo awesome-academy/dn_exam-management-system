@@ -34,3 +34,8 @@ vi:
       sub_title_4: Lorem ipsum dolor sit
       learn_now: Học luôn
       service: Dịch vụ
+  exams:
+    question:
+      your_answer: Câu trả lời của bạn
+    show:
+      take_exam: Làm bài trắc nghiệm

@@ -32,5 +32,10 @@ en:
       sub_title_2: Lorem ipsum dolor sit
       sub_title_3: Lorem ipsum dolor sit
       sub_title_4: Lorem ipsum dolor sit
-      learn_now: Học luôn
-      service: Dịch vụ
+      learn_now: Learn now
+      service: Service
+  exams:
+    question:
+      your_answer: Your Answer
+    show:
+      take_exam: Take the exam

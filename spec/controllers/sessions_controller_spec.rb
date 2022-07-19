@@ -20,7 +20,7 @@ RSpec.describe SessionsController, type: :controller do
       post :create, params: {session: {email: "user@gmail.com", password: "123123"}}
     end
     it "should login in sucess" do
-      expect(logged_in?).to eq true
+      expect(user_signed_in?).to eq true
     end
   end
 
@@ -52,7 +52,7 @@ RSpec.describe SessionsController, type: :controller do
       end
 
       it "should logout success" do
-        expect(logged_in?).to eq false
+        expect(user_signed_in?).to eq false
       end
     end
   end

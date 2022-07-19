@@ -1,4 +1,4 @@
-User.create!(
+admin = User.new(
   first_name: "admin",
   last_name: "admin",
   email: "admin@gmail.com",
@@ -6,7 +6,9 @@ User.create!(
   password_confirmation: "123123",
   role: 0
 )
-User.create!(
+admin.skip_confirmation!
+admin.save!
+user = User.new(
   first_name: "user",
   last_name: "user",
   email: "user@gmail.com",
@@ -14,6 +16,8 @@ User.create!(
   password_confirmation: "123123",
   role: 1
 )
+user.skip_confirmation!
+user.save!
 10.times do |n|
   subject_name = "Môn học của " + Faker::Name.name
   Subject.create!(

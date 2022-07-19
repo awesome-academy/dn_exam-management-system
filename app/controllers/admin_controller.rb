@@ -11,7 +11,7 @@ class AdminController < ApplicationController
   end
 
   def logged_in_user
-    return if logged_in?
+    return if user_signed_in?
 
     store_location
     flash[:danger] = t ".require_login"

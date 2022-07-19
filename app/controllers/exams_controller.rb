@@ -1,5 +1,4 @@
 class ExamsController < ApplicationController
-  include SessionsHelper
   before_action :logined_in?
   before_action :load_user, only: %i(index create search)
   before_action :load_subject, only: %i(new create)

@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
-  before_action :set_locale, :current_user
+
+  before_action :set_locale
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protect_from_forgery with: :exception, if: ->{request.format.json?}
@@ -9,6 +10,7 @@ class ApplicationController < ActionController::Base
   prepend_before_action :set_locale
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from CanCan::AccessDenied, with: :access_denied
 
   protected
 
@@ -33,11 +35,14 @@ class ApplicationController < ActionController::Base
     {locale: I18n.locale}
   end
 
-  def logined_in?
-    return if user_signed_in?
+  def access_denied
+    if current_user.nil?
+      flash[:danger] = t ".access_denied_login"
+      return redirect_to signin_path
+    end
 
-    flash[:danger] = t ".you_need_to_login"
-    redirect_to :login
+    flash[:danger] = t ".access_denied"
+    redirect_to root_path
   end
 
   def load_per_page per_page

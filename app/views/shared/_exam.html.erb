@@ -1,12 +1,12 @@
 <tr>
   <td class = "text-center"><%= exam_counter +1 %> </td>
-  <% if @user&.admin? %>
+  <% if current_user&.admin? %>
     <td class = "text-center"><%= load_user_name exam %> </td>
   <% end %>
   <td class = "text-center"><%= exam.subject_name %> </td>
   <td class = "text-center"><%= l(exam.created_at) %></td>
-  <td class = "text-center"><%= exam.spent_time %></td>
-  <td class = "text-center"><%= exam.score %></td>
+  <td class = "text-center"><%= to_minutes exam.spent_time %></td>
+  <td class = "text-center"><%= exam.score.nil? ? 0.0 : exam.score  %></td>
   <td class = "text-center"><%= link_to t(".view_details"),
-                           send(load_exam_details_path(@user), exam.id) %></td>
+                           send(load_exam_details_path(current_user), exam.id) %></td>
 </tr>

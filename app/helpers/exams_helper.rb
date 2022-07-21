@@ -29,6 +29,10 @@ module ExamsHelper
     exam_details.selected_answer_id == answer_id
   end
 
+  def to_minutes time
+    "#{(time.to_f / 60).round(2)}m"
+  end
+
   def content_for_span exam_details
     if Answer.find_by(id: exam_details.selected_answer_id)&.true_answer?
       {value: t(".correct"), class: "badge badge-pill badge-success"}

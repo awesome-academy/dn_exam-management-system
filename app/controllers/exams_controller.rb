@@ -1,5 +1,5 @@
 class ExamsController < ApplicationController
-  before_action :logined_in?
+  authorize_resource
   before_action :load_user, only: %i(index create search)
   before_action :load_subject, only: %i(new create)
   before_action :load_questions, :init_exam,
@@ -21,6 +21,7 @@ class ExamsController < ApplicationController
     begin
       ActiveRecord::Base.transaction do
         update_details answers
+        @exam.spent_time = Time.now.to_i - @exam.created_at.to_i
         @exam.save!
       end
       flash[:success] = t ".exam_done"
@@ -44,9 +45,7 @@ class ExamsController < ApplicationController
   end
 
   def load_subject
-
     return if @subject = Subject.find_by(id: params[:subject_id])
-
 
     flash[:danger] = t ".resource_not_found"
     redirect_to :root
@@ -74,10 +73,6 @@ class ExamsController < ApplicationController
     @user = current_user
   end
 
-  # def exam_params
-  #   params.require(:exam).permit(:user_id, :subject_id, :id)
-  # end
-
   def update_details answers
     score = 0
     (0..9).each do |i|
@@ -91,11 +86,6 @@ class ExamsController < ApplicationController
     end
   end
 
-  # def user_not_correct
-  #   flash[:danger] = t ".user_not_correct"
-  #   redirect_to :root
-  # end
-
   def load_exam
     return if @exam = current_user.exams
                                   .includes(exam_details: [question: :answers])
@@ -106,8 +96,8 @@ class ExamsController < ApplicationController
   end
 
   def load_exams
-    @pagy, @exams = pagy @user
-                    .exams.by_key_word_with_relation_tables(params[:query]),
+    @pagy, @exams = pagy current_user
+                    .exams.by_key_word_with_relation_tables(params[:query]).recent_exam,
                          items: load_per_page(Settings.paging.per_page_5)
   end
 end

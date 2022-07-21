@@ -1,3 +1,4 @@
+puts "Seeding data"
 admin = User.new(
   first_name: "admin",
   last_name: "admin",
@@ -18,6 +19,17 @@ user = User.new(
 )
 user.skip_confirmation!
 user.save!
+user2 = User.new(
+  first_name: "user2",
+  last_name: "user2",
+  email: "user2@gmail.com",
+  password: "123123",
+  password_confirmation: "123123",
+  role: 1
+)
+user2.skip_confirmation!
+user2.save!
+
 10.times do |n|
   subject_name = "Môn học của " + Faker::Name.name
   Subject.create!(
@@ -26,6 +38,7 @@ user.save!
     name: subject_name
   )
 end
+
 10.times do |n|
   subject_name = "Môn học của " + Faker::Name.name
   Subject.create!(
@@ -35,12 +48,41 @@ end
     name: subject_name
   )
 end
+
 10.times do |n|
-  user_id = n%2 + 1
-  Exam.create!(
-    user_id: user_id,
-    subject_id: (n + 1),
-    spent_time: 120,
-    score: n%11
+  Question.create!(
+    subject_id: 10,
+    content: Faker::Emotion.noun
   )
 end
+
+10.times do |n|
+  Question.create!(
+    subject_id: 9,
+    content: Faker::Emotion.noun
+  )
+end
+
+questions = Question.all
+questions.each do |question|
+  4.times do |m|
+    true_asnwer = m == 0 ? :true_answer : :false_answer
+    q = question.answers.build content: Faker::Emotion.noun, is_correct: true_asnwer
+    q.save!
+  end
+end
+
+users = User.all
+users.each do |user|
+  5.times do |n|
+    Exam.create!(
+      user_id: user.id,
+      subject_id: n + 1,
+      spent_time: 120,
+      score: n%11
+    )
+  end
+end
+
+
+puts "Done!!!"

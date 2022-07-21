@@ -1,9 +1,11 @@
 <li id="subject_<%= subject.id %>", class="list-group-item">
   <div class="float-left">
-    <%= link_to subject.name, subject %> |
-    <%= link_to t(".start_exam"), new_subject_exam_path(subject_id: subject.id) %>
+    <%= link_to subject.name, subject %>
+    <% if can? :all, Exam %>
+      | <%= link_to t(".start_exam"), new_subject_exam_path(subject_id: subject.id) %>
+    <% end %>
   </div>
-  <% if @current_user&.admin? %>
+  <% if can? %i(update, delete, export), Subject %>
     <div class="float-right">
       <%= link_to export_admin_subject_path(subject.id, format: :pdf),
          method: :get do %>

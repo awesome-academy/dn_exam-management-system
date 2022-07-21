@@ -1,10 +1,15 @@
 Rails.application.routes.draw do
-  get "/login", to: "sessions#new"
-  post "/login", to: "sessions#create"
-  delete "/logout", to: "sessions#destroy"
+  devise_for :users
+
+  as :user do
+    get "signin" => "devise/sessions#new"
+    get "/signup" => "devise/registrations#new"
+    post "signin" => "devise/sessions#create"
+    delete "signout" => "devise/sessions#destroy"
+  end
+
   root "static_pages#home"
   get "/search", to: "exams#search", as: :search
-  resources :sessions, only: %i(new create destroy)
   resources :subjects, only: %i(index show)
   resources :exams
   namespace :admin do

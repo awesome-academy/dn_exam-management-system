@@ -44,7 +44,7 @@ RSpec.describe ExamsController, type: :controller do
       end
 
       it "not logged in" do
-        expect(response).to redirect_to :login
+        expect(response).to redirect_to :signin
       end
     end
   end

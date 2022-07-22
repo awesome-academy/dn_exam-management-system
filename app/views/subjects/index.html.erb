@@ -4,7 +4,7 @@
       <div class="float-left">
         <p class="function-text"><%= t ".title" %></p>
       </div>
-      <% if @current_user&.admin? %>
+      <% if can? :create, Subject %>
         <div class="float-right">
           <%= link_to t(".btn_create_subject"), new_admin_subject_path, class: "btn btn-primary" %>
         </div>

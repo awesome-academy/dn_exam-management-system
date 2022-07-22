@@ -64,6 +64,7 @@ en:
       submit_exam: Submit
     index:
       search: Search
+      access_denied_login: "Requied Login!"
     show:
       exam_date: Exam Date
       score: Score

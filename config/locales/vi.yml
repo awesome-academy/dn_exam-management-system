@@ -62,6 +62,7 @@ vi:
       submit_exam: Nộp bài
     index:
       search: Tìm kiếm
+      access_denied_login: "Vui lòng đăng nhập!"
     show:
       exam_date: Ngày làm bài
       score: Điểm
@@ -70,6 +71,7 @@ vi:
     index:
       title: "Môn học"
       btn_create_subject: "Tạo bài thi mới"
+      access_denied_login: "Vui lòng đăng nhập"
     new:
       title: "Tạo bài thi mới"
     subject:

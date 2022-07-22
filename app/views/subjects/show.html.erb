@@ -5,14 +5,14 @@
         <h2><%= t ".title", name: @subject.name %></h2>
         <h4 class="text-muted"><%= t ".content", content: @subject.content %></h4>
       </div>
-      <% if @current_user&.admin? %>
+      <% if can? :create, Question %>
         <div class="float-right">
           <%= link_to t(".btn_create_question"), new_admin_subject_question_path(@subject), class: "btn btn-primary" %>
         </div>
       <% end %>
     </div>
   </div>
-  <% if @current_user&.admin? %>
+  <% if can? %i(create update), Question %>
     <div class="row mt-2">
       <div class="col-md-10 offset-md-1">
         <ul class="list-group mb-2">

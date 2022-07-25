@@ -30,7 +30,7 @@ user2 = User.new(
 user2.skip_confirmation!
 user2.save!
 
-10.times do |n|
+50.times do |n|
   subject_name = "Môn học của " + Faker::Name.name
   Subject.create!(
     user_id: User.first.id,
@@ -39,7 +39,7 @@ user2.save!
   )
 end
 
-10.times do |n|
+50.times do |n|
   subject_name = "Môn học của " + Faker::Name.name
   Subject.create!(
     user_id: User.first.id,
@@ -51,14 +51,14 @@ end
 
 10.times do |n|
   Question.create!(
-    subject_id: 10,
+    subject_id: 50,
     content: Faker::Emotion.noun
   )
 end
 
 10.times do |n|
   Question.create!(
-    subject_id: 9,
+    subject_id: 49,
     content: Faker::Emotion.noun
   )
 end

@@ -8,4 +8,15 @@ class Subject < ApplicationRecord
   validates :content, presence: true,
             length: {maximum: Settings.subject.content.max_1000}
   scope :recent_subjects, ->{order created_at: :desc}
+
+  def self.question_count_lteq count
+    return Subject.all if count.blank?
+
+    Subject.includes(:questions).group("subjects.id")
+           .having("COUNT(questions.id) <= #{count.to_i}").references(:questions)
+  end
+
+  ransacker :created_at, type: :date do
+    Arel.sql("date(subjects.created_at)")
+  end
 end

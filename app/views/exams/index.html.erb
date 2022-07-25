@@ -1,6 +1,5 @@
 <% provide :placeholder, t(".placeholder_search_user") %>
 <div class="content">
-  <%= render "shared/search" %>
   <div class="row mt-2">
     <div class="col-md-10 offset-md-1">
       <div class="row mt-2">
@@ -20,21 +19,36 @@
                   <th colspan="1" class="align-middle"><%= t ".action" %></th>
                 </tr>
               </thead>
-            <tbody id = "search_result">
-              <%= render "shared/search_result" %>
-            </tbody>
-          </table>
-          <div class="card-footer">
-            Sun-asterisk ®
+              <tbody id = "search_result">
+                <%= search_form_for @q, class: "d-flex justify-content-center " do |f|%>
+                  <div class="input-group-prepend w-100 my-2  ">
+                    <%= f.search_field :by_key_word_with_relation_tables, autofocus: true, class: "form-control",
+                              placeholder: t(".search_username_email_subject") %>
+                    <div class="col-xs-2 ml-2">
+                      <%= number_field_tag :"q[score_lteq]", params[:score_lteq],
+                                  min: 0, placeholder: t(".search_max_score"), class: "form-control" %>
+                    </div>
+                    <div class="col-xs-2 ml-2">
+                      <%= f.date_field :created_at_eq, as: :date,
+                             value: f.object.try(:strftime,"%d/%m/%Y"), class: "form-control" %>
+                    </div>
+                    <%= f.submit class: "btn btn-primary ml-2" %>
+                  </div>
+                <% end %>
+                <%= render "shared/search_result" %>
+              </tbody>
+            </table>
+            <div class="card-footer">
+              Sun-asterisk ®
+            </div>
           </div>
-        </div>
-        <ul class="list-group">
-          <br>
-          <div class="d-inline">
-          <div class="float-right">
-            <%== pagy_bootstrap_nav @pagy %>
+          <ul class="list-group">
+            <br>
+            <div class="d-inline">
+              <div class="float-right">
+                <%== pagy_bootstrap_nav @pagy %>
+              </div>
+            </div>
           </div>
-        </div>
+        </ul>
       </div>
-    </ul>
-</div>

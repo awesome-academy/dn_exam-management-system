@@ -12,4 +12,15 @@ class Question < ApplicationRecord
   validates :content, presence: true,
             length: {maximum: Settings.question.content.max_1000}
   scope :recent_questions, ->{order created_at: :desc}
+
+  def self.answer_count_lteq count
+    return Question.all if count.blank?
+
+    Question.includes(:answers).group("questions.id")
+            .having("COUNT(answers.id) <= #{count.to_i}").references(:answers)
+  end
+
+  ransacker :created_at, type: :date do
+    Arel.sql("date(questions.created_at)")
+  end
 end

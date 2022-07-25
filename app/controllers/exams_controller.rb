@@ -5,9 +5,12 @@ class ExamsController < ApplicationController
   before_action :load_questions, :init_exam,
                 only: :create
   before_action :load_exam, only: %i(update show)
-  before_action :load_exams, only: %i(index search)
 
-  def index; end
+  def index
+    @q = current_user.exams.by_key_word_with_relation_tables(params[:by_key_word_with_relation_tables]).ransack(params[:q])
+    @exams = @q.result
+    @pagy, @exams = pagy(@exams.recent_exam, items: Settings.paging.per_page_5)
+  end
 
   def search; end
 
@@ -93,11 +96,5 @@ class ExamsController < ApplicationController
 
     flash[:danger] = t "exam_not_found"
     redirect_to :root
-  end
-
-  def load_exams
-    @pagy, @exams = pagy current_user
-                    .exams.by_key_word_with_relation_tables(params[:query]).recent_exam,
-                         items: load_per_page(Settings.paging.per_page_5)
   end
 end

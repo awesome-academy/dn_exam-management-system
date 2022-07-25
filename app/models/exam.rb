@@ -12,4 +12,12 @@ class Exam < ApplicationRecord
   joins(:subject, :user).where("subjects.name like ?", "%#{key_search}%")
                         .or(where("users.last_name like ?", "%#{key_search}%"))
                         .or(where("users.email like ?", "%#{key_search}%"))}
+
+  def self.ransackable_scopes auth_object = nil
+    [:by_key_word_with_relation_tables]
+  end
+
+  ransacker :created_at, type: :date do
+    Arel.sql("date(exams.created_at)")
+  end
 end

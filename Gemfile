@@ -19,6 +19,7 @@ gem "mysql2"
 gem "net-smtp", require: false
 gem "pagy"
 gem "puma", "~> 5.0"
+gem "ransack"
 gem "rails", "~> 6.1.6"
 gem "rails-controller-testing"
 gem "rails-i18n"

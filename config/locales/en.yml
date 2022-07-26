@@ -65,6 +65,8 @@ en:
     index:
       search: Search
       access_denied_login: "Requied Login!"
+      search_username_email_subject: "Enter username or email or subject"
+      search_max_score: "Max score"
     show:
       exam_date: Exam Date
       score: Score
@@ -73,6 +75,9 @@ en:
     index:
       title: "Test exam"
       btn_create_subject: "Create new test exam"
+      access_denied_login: "Please sign in"
+      search_subject_name_and_content: "Enter name or content subject"
+      search_max_question: "Max question"
     new:
       title: "Create new test exam"
     subject:
@@ -83,6 +88,8 @@ en:
       content: "Content: %{content}"
       btn_create_question: "Create question"
       confirm_delete: "Are you sure?"
+      search_content: "Enter content question"
+      search_max_answer: "Max answer"
   required_admin: "Permission admin required !"
   require_login: "Please login"
   admin:
@@ -131,6 +138,11 @@ en:
       destroy:
         delete_successed: "Delete question successed"
         delete_failed: "Delete question failed"
+    exams:
+      index:
+        search_username_email_subject: "Enter username or email or subject"
+        search_max_score: "Max score"
+
   shared:
     error: "Error"
   time:

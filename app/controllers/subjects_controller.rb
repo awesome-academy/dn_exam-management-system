@@ -3,12 +3,16 @@ class SubjectsController < ApplicationController
   before_action :load_subject, only: :show
 
   def show
-    @pagy, @questions = pagy(@subject.questions.recent_questions,
-                             items: Settings.paging.per_page_10)
+    @q = Question.answer_count_lteq(params[:answer_count_lteq]).ransack(params[:q])
+    @questions = @q.result
+    @pagy, @questions = pagy(@questions, items: Settings.paging.per_page_10)
   end
 
   def index
-    @pagy, @subjects = pagy(Subject.active.recent_subjects,
+    @q = Subject.question_count_lteq(params[:question_count_lteq])
+                .ransack(params[:q])
+    @subjects = @q.result
+    @pagy, @subjects = pagy(@subjects.active.recent_subjects,
                             items: Settings.paging.per_page_15)
   end
 

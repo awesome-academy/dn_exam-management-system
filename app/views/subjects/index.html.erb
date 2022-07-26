@@ -15,6 +15,24 @@
 <div class="row mt-2">
   <div class="col-md-10 offset-md-1">
     <ul class="list-group mb-2">
+      <%= search_form_for @q, class: "d-flex justify-content-center" do |f|%>
+        <div class="input-group-prepend w-100 mb-2 ">
+          <%= f.search_field :name_or_content_cont, autofocus: true, class: "form-control",
+                              placeholder: t(".search_subject_name_and_content")
+          %>
+          <div class="col-xs-2 ml-2">
+            <%= number_field_tag :question_count_lteq, params[:question_count_lteq],
+                                  min: 0, placeholder: t(".search_max_question"), class: "form-control"
+            %>
+          </div>
+          <div class="col-xs-2 ml-2">
+            <%= f.date_field :created_at_eq, as: :date,
+                             value: f.object.try(:strftime,"%d/%m/%Y"), class: "form-control"
+            %>
+          </div>
+          <%= f.submit class: "btn btn-primary ml-2" %>
+        </div>
+      <% end %>
       <%= render @subjects %>
     </ul>
     <%== pagy_bootstrap_nav @pagy %>
